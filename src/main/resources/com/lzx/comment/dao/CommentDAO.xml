@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzx.comment.dao.CommentDAO">
+    <resultMap id="commentResultMap" type="com.lzx.comment.dataobject.CommentDO">
+        <id column="id" property="id"></id>
+        <result column="ref_id" property="refId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="content" property="content"></result>
+        <result column="parent_id" property="parentId"></result>
+        <result column="gmt_created" property="gmtCreated"></result>
+        <result column="gmt_modifid" property="gmtModified"></result>
+
+    </resultMap>
+    <insert id="add" parameterType="com.lzx.comment.dataobject.CommentDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment (ref_id,user_id,content,parent_id,gmt_created,gmt_modified)
+        VALUES(#{refId},#{userId},#{content},#{parentId},now(),now())
+    </insert>
+
+    <insert id="batchAdd" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT  into comment (ref_id,user_id,content,parent_id,gmt_created,gmt_modified)
+        values
+        <foreach collection="list" item="it" index="index" separator=",">
+            (#{it.refId},#{it.userId},#{it.content},#{it.parentId},now(),now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.lzx.comment.dataobject.CommentDO">
+        update comment
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="content != null">
+                content = #{content},gmt_modified = now()
+            </if>
+        </set>
+         where id =#{id}
+    </update>
+
+    <delete id="delete">
+        delete from comment where id=#{id}
+    </delete>
+    <select id="findAll" resultMap="commentResultMap">
+        select * from comment
+    </select>
+
+    <select id="findByRefId" resultMap="commentResultMap">
+        select * from comment where ref_id=#{refId}
+    </select>
+
+
+
+    <select id="findByUserIds" resultMap="commentResultMap">
+        select * from comment
+        <where>
+            user_id in
+            <foreach collection="userIds" item="it" index="index" open="(" separator="," close=")">#{it}</foreach>
+        </where>
+    </select>
+</mapper>
