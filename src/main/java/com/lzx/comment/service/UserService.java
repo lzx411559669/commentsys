@@ -16,4 +16,12 @@ public interface UserService {
      * @return
      */
     public Result<User> register(String userName,String pwd);
+
+    /**
+     * 用户登录
+     * @param userName
+     * @param pwd
+     * @return
+     */
+    public Result<User> login(String userName,String pwd);
 }

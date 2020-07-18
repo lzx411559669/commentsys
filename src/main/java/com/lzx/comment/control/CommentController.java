@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.lzx.comment.dao.CommentDAO;
 import com.lzx.comment.dataobject.CommentDO;
+import com.lzx.comment.model.Comment;
+import com.lzx.comment.model.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +53,7 @@ public class CommentController {
 
     @GetMapping("/comment/findByRefId")
     @ResponseBody
-    public List<CommentDO> findByRefId(@RequestParam("refId") String refId) {
+    public List<Comment> findByRefId(@RequestParam("refId") String refId) {
         return commentDAO.findByRefId(refId);
     }
 

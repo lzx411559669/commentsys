@@ -19,7 +19,7 @@ public class User {
     @JsonSerialize(using = NullSerializer.class)
     private String pwd;
     private String nickName;
-    private String avator;
+    private String avatar;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreated;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")

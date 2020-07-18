@@ -5,6 +5,7 @@ import com.lzx.comment.dao.UserDAO;
 import com.lzx.comment.dataobject.UserDO;
 import com.lzx.comment.model.Result;
 import com.lzx.comment.model.User;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,7 @@ public class UserServiceImpl implements UserService {
                     userDAO.add(userDO);
                     result.setSuccess(true);
                     //将 UserDO 对象转化为 User 对象
-                    User user = new User();
-                    user.setId(userDO.getId());
-                    user.setUserName(userDO.getUserName());
-                    user.setNickName(userDO.getNickName());
+                    User user = userDO.toModel();
 
                     result.setData(user);
                 }else{
@@ -61,6 +59,44 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+        return result;
+    }
+
+    @Override
+    public Result<User> login(String userName, String pwd) {
+
+        Result<User> result = new Result<>();
+        if (StringUtils.isEmpty(userName)){
+            result.setSuccess(false);
+            result.setCode("600");
+            result.setMessage("用户名不能为空");
+            return result;
+        }
+        if (StringUtils.isEmpty(pwd)){
+            result.setCode("601");
+            result.setSuccess(false);
+            result.setMessage("密码不能为空");
+            return  result;
+        }
+
+        UserDO userDO = userDAO.findByUserName(userName);
+        if (userDO == null){
+            result.setCode("602");
+            result.setMessage("用户名不存在");
+            return result;
+
+        }
+        String saltPwd = pwd +"_lzx0203";
+        String md5Pwd = DigestUtils.md5Hex(saltPwd).toUpperCase();
+        if (!md5Pwd.equals(userDO.getPwd())){
+            result.setCode("603");
+            result.setMessage("密码不对");
+            return result;
+        }
+        User user = userDO.toModel();
+
+        result.setSuccess(true);
+        result.setData(user);
         return result;
     }
 }

@@ -17,9 +17,11 @@ public class Comment {
     private String refId;
     private User author;
     private String content;
+    private long parentId;
     private List<Comment> children;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreated;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
+
 }

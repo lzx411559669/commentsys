@@ -1,6 +1,7 @@
 package com.lzx.comment.dao;
 
 import com.lzx.comment.dataobject.CommentDO;
+import com.lzx.comment.model.Comment;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public interface CommentDAO {
      * @return List<CommentDO>
      */
     //@Select("SELECT id,ref_id as refId,user_id as userId,parent_id as parentId,content,gmt_created as gmtCreated,gmt_modified as gmtModified FROM comment where ref_id = #{refId}")
-    List<CommentDO> findByRefId(@Param("refId")String refId);
+    List<Comment> findByRefId(@Param("refId")String refId);
 
     /**
      * 批量插入
