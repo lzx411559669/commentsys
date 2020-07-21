@@ -4,10 +4,7 @@ import com.lzx.comment.model.Comment;
 import com.lzx.comment.model.Result;
 import com.lzx.comment.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -30,6 +27,7 @@ public class CommentAPI {
     }
 
     @GetMapping("/api/comment/query")
+    @ResponseBody
     public Result<List<Comment>> query(@RequestParam("refId") String refId) {
         return commentService.query(refId);
     }

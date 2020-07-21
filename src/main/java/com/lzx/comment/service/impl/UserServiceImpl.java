@@ -5,7 +5,6 @@ import com.lzx.comment.dao.UserDAO;
 import com.lzx.comment.dataobject.UserDO;
 import com.lzx.comment.model.Result;
 import com.lzx.comment.model.User;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
